@@ -1,3 +1,4 @@
+/*
 package ru.SVTsygankov.security.util;
 
 import org.springframework.stereotype.Component;
@@ -22,8 +23,10 @@ public class UserValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         User user = (User) target;
-        if(userService.findUserByLogin(user.getLogin()).isPresent()) {
-            errors.rejectValue("login", "", "Этот login уже занят. Выберете другой");
+        System.out.println(" Пользователь в валидаторе = " + user);
+        if(userService.findUserByEmail(user.getEmail()).isPresent()) {
+            errors.rejectValue("email", "", "Этот email уже занят. Выберете другой");
         }
     }
 }
+*/

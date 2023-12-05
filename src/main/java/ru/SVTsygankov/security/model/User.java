@@ -1,10 +1,7 @@
 package ru.SVTsygankov.security.model;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,28 +25,28 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotEmpty(message = "Login не должен быть пустым")
-    @Size(min = 2, max = 30, message = "Login должен быть от 2 ло 30 символов")
-    @Column(unique=true)
-    private String login;
+//    @Email(message = "Email должен быть правильным")
+    @Column(name = "email")
+    private String email;
 
-    @NotEmpty(message = "Password не должен быть пустым")
+//    @NotEmpty(message = "Password не должен быть пустым")
     @Size(min = 8, max = 64, message = "Password должен быть от 8 до 64 символов")
     private String password;
 
-    @NotEmpty(message = "Имя не должно быть пустым")
-    @Size(min = 2, max = 30, message = "Имя должно быть от 2 ло 30 символов")
+//    @NotEmpty(message = "Имя не должно быть пустым")
+//    @Size(min = 2, max = 30, message = "Имя должно быть от 2 ло 30 символов")
     @Column(name = "firstname")
     private String firstName;
 
-    @NotEmpty(message = "Фамилия не должна быть пустой")
-    @Size(min = 2, max = 30, message = "Фамилия должна быть от 2 ло 30 символов")
+//    @NotEmpty(message = "Фамилия не должна быть пустой")
+//    @Size(min = 2, max = 30, message = "Фамилия должна быть от 2 ло 30 символов")
     @Column(name = "lastname")
     private String lastName;
 
-    @Email(message = "Email должен быть правильным")
-    @Column(name = "email")
-    private String email;
+    @Column(name = "age")
+//    @Min (value = 0, message = "Возраст не может быть меньше нуля")
+//    @Max(value = 500, message = "Вы уверены что возраст больше 500 лет?")
+    private Byte age;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -59,15 +56,14 @@ public class User implements UserDetails {
 
     private List<Role> roles = new ArrayList<>();
 
-
     public User() {}
 
-    public User(String login, String password, String firstName, String lastName, String email, List<Role> roles) {
-        this.login = login;
+    public User(String password, String firstName, String lastName, String email, byte age, List<Role> roles) {
+        this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
+        this.age = age;
         this.roles = roles;
     }
 
@@ -76,14 +72,6 @@ public class User implements UserDetails {
     }
 
     public void setId(long id) { this.id = id; }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -117,6 +105,14 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    public Byte getAge() {
+        return age;
+    }
+
+    public void setAge(Byte age) {
+        this.age = age;
+    }
+
     public List<Role> getRoles() {
         return roles;
     }
@@ -129,7 +125,7 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() { return getRoles(); }
 
     @Override
-    public String getUsername() { return login; }
+    public String getUsername() { return email; }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -155,11 +151,11 @@ public class User implements UserDetails {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", login='" + login + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
+                ", age='" + age + '\'' +
                 ", roles=" + roles +
                 '}';
     }

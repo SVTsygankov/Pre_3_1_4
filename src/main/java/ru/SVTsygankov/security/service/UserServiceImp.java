@@ -52,13 +52,13 @@ public class UserServiceImp implements UserService, UserDetailsService {
     }
 
     @Override
-    public Optional<User> findUserByLogin(String login) {
-        return userRepository.findByLogin(login);
+    public Optional<User> findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByLogin(login);
-        if (user.isEmpty()) throw new UsernameNotFoundException("Пользователя с login = " + login + " не найден");
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isEmpty()) throw new UsernameNotFoundException("Пользователя с email = " + email + " не найден");
         return  user.get();
         }
 

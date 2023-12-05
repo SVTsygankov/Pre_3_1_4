@@ -1,7 +1,6 @@
 package ru.SVTsygankov.security.service;
 
 import ru.SVTsygankov.security.model.User;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -10,7 +9,7 @@ public interface UserService {
 
     User findUserById(Long id);
 
-    Optional findUserByLogin(String login);
+    Optional<User> findUserByEmail(String email);
 
     boolean deleteUser(Long id);
 
