@@ -25,38 +25,30 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-//    @Email(message = "Email должен быть правильным")
     @Column(name = "email")
     private String email;
 
-//    @NotEmpty(message = "Password не должен быть пустым")
-    @Size(min = 8, max = 64, message = "Password должен быть от 8 до 64 символов")
     private String password;
 
-//    @NotEmpty(message = "Имя не должно быть пустым")
-//    @Size(min = 2, max = 30, message = "Имя должно быть от 2 ло 30 символов")
     @Column(name = "firstname")
     private String firstName;
 
-//    @NotEmpty(message = "Фамилия не должна быть пустой")
-//    @Size(min = 2, max = 30, message = "Фамилия должна быть от 2 ло 30 символов")
     @Column(name = "lastname")
     private String lastName;
 
     @Column(name = "age")
-//    @Min (value = 0, message = "Возраст не может быть меньше нуля")
-//    @Max(value = 500, message = "Вы уверены что возраст больше 500 лет?")
     private Byte age;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-                name = "users_roles",
-                joinColumns = @JoinColumn(name = "user_id"),
-                inverseJoinColumns = @JoinColumn(name = "role_id"))
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
 
     private List<Role> roles = new ArrayList<>();
 
-    public User() {}
+    public User() {
+    }
 
     public User(String password, String firstName, String lastName, String email, byte age, List<Role> roles) {
         this.email = email;
@@ -71,7 +63,9 @@ public class User implements UserDetails {
         return id;
     }
 
-    public void setId(long id) { this.id = id; }
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -122,10 +116,14 @@ public class User implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() { return getRoles(); }
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
 
     @Override
-    public String getUsername() { return email; }
+    public String getUsername() {
+        return email;
+    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -158,11 +156,6 @@ public class User implements UserDetails {
                 ", age='" + age + '\'' +
                 ", roles=" + roles +
                 '}';
-    }
-    public String rolesToString() {
-        String role = "";
-        for (Role r : roles)
-            role = role + " " + r.toString();
-        return role;
+
     }
 }

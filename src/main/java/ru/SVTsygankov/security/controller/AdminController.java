@@ -24,16 +24,14 @@ public class AdminController {
     private final RoleService roleService;
     private final UserService userService;
 
-    @Autowired
-    public AdminController(UserService userService, RoleService roleService) {
+     public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
     }
 
     @GetMapping()
     public String showAll(@ModelAttribute("user") User user, Principal principal, Model model) {
-        User authenticatedUser = userService.findUserByEmail(principal.getName()).get(); //User который аутентифицировался
-        System.out.println("User который аутентифицировался = " + authenticatedUser);
+        User authenticatedUser = userService.findByUsername(principal.getName()); //User который аутентифицировался
         model.addAttribute("authenticatedUser", authenticatedUser);
         model.addAttribute("rolesAuthenticatedUser", authenticatedUser.getRoles());
         model.addAttribute("users", userService.findAll());

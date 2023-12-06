@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.SVTsygankov.security.model.User;
 import ru.SVTsygankov.security.service.UserService;
-
 import java.security.Principal;
 
 @Controller
@@ -15,7 +14,6 @@ import java.security.Principal;
 public class UsersController {
     private final UserService userService;
 
-    @Autowired
     public UsersController (UserService userService) {
         this.userService = userService;
     }
@@ -26,7 +24,7 @@ public class UsersController {
     @GetMapping()
     public String showUserAcc(Principal principal, Model model) {
 
-        User user =  (User)userService. findUserByEmail(principal.getName()).get();
+        User user =  userService.findByUsername(principal.getName());
         model.addAttribute("user", user);
         model.addAttribute("userRoles", user.getRoles()); //
         return "user/user_profile";

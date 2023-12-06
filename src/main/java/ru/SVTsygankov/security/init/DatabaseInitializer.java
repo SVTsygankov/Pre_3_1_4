@@ -34,12 +34,9 @@ public class DatabaseInitializer implements ApplicationListener<ContextRefreshed
         role1.setRole("ROLE_USER");
         Role role2 = new Role();
         role2.setRole("ROLE_ADMIN");
-//        Role role3 = new Role();
-//        role3.setRole("ROLE_BUYER");
 
         roleRepository.save(role1);
         roleRepository.save(role2);
-//        roleRepository.save(role3);
 
         List<Role> adminRoles = new ArrayList<>();
         adminRoles.add(role1);

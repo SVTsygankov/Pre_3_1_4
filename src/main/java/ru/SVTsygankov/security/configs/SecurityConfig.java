@@ -8,16 +8,17 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.SVTsygankov.security.service.UserServiceImp;
+import ru.SVTsygankov.security.details.UserDetailsServiceImp;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final SuccessUserHandler successUserHandler;
-    private final UserServiceImp userService;
+    private UserDetailsServiceImp userService;
 
-    public SecurityConfig(SuccessUserHandler successUserHandler, UserServiceImp userService) {
+
+    public SecurityConfig(SuccessUserHandler successUserHandler, UserDetailsServiceImp userService) {
         this.successUserHandler = successUserHandler;
         this.userService = userService;
     }
