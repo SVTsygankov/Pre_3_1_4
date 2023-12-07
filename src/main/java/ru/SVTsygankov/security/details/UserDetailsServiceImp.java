@@ -6,14 +6,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.SVTsygankov.security.model.User;
-import ru.SVTsygankov.security.service.UserServiceImp;
+import ru.SVTsygankov.security.service.UserService;
 @Service
-@Transactional
 public class UserDetailsServiceImp implements UserDetailsService {
 
-    private UserServiceImp userService;
+    private final UserService userService;
 
-    public UserDetailsServiceImp(UserServiceImp userService) {
+    public UserDetailsServiceImp(UserService userService) {
         this.userService = userService;
     }
 
